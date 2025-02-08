@@ -21,8 +21,9 @@ export class BreedsService {
     return respuesta;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} breed`;
+  async findOne(id: number) {
+    const respuesta = await this.breedService.findOne({where: {id}});
+    return respuesta;
   }
 
   update(id: number, updateBreedDto: UpdateBreedDto) {
