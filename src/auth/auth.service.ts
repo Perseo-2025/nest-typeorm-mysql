@@ -40,11 +40,22 @@ export class AuthService {
             throw new UnauthorizedException('El password no es correcto');
         }
 
-        const payload = {email : user.email, sub: user.id};
+        const payload = {email : user.email, role: user.role};
         
         const token = await this.jwtService.signAsync(payload);
 
         const respuesta = {token, user}
         return respuesta;
+    }
+
+
+    async profile({email, role} : {email:string, role:string}){
+        console.log(role);
+        
+        
+        /* if(role !== 'admin'){
+            throw new UnauthorizedException('No tienes permisos para acceder a este perfil');
+        } */
+        return await this.usersService.finOneByEmail(email);
     }
 }
