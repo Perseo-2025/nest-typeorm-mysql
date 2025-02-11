@@ -5,12 +5,10 @@ import { envs } from './config/env';
 import { BreedsModule } from './breeds/breeds.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-
-@Module({
+ @Module({
   imports: [
-    CatsModule,
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: envs.dbHost,
       port: envs.dbPort,
       username: envs.dbUser,
@@ -18,7 +16,17 @@ import { AuthModule } from './auth/auth.module';
       database: envs.dbName,
       autoLoadEntities: true,
       synchronize: true,
+      ssl: envs.postgresSsl === 'true',
+      extra: {
+        ssl: 
+        envs.postgresSsl === 'true'
+        ? { 
+          rejectUnauthorized: false 
+        }
+        : null,
+      },
     }),
+    CatsModule,
     BreedsModule,
     UsersModule,
     AuthModule,
