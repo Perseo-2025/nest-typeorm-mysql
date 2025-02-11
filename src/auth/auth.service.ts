@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     async login(loginDto:LoginDto){
-        const user = await this.usersService.finOneByEmail(loginDto.email);
+        const user = await this.usersService.findOneByEmailWhithPassword(loginDto.email);
         if(!user){
             throw new UnauthorizedException('El email no existe');
         }

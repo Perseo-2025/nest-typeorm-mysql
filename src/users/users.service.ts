@@ -19,11 +19,23 @@ export class UsersService {
     return respuesta;
   }
 
+  /* Buscar el email */
   async finOneByEmail(email: string) {
     return this.userService.findOne({ where: { email } });
   }
+
+  /* Buscar el email con y el password */
+  async findOneByEmailWhithPassword(email: string) {
+    const respuesta = await this.userService.findOne({
+      where: { email },
+      select: ['id', 'email', 'password', 'role', 'name', 'dni', 'active'],
+    })
+    return respuesta;
+  }
+
   async findAll() {
-    return `This action returns all users`;
+    const respuesta = await this.userService.find();
+    return respuesta;
   }
 
   async findOne(id: number) {

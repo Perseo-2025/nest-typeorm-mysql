@@ -1,3 +1,4 @@
+import { Role } from "../../common/enum/rol.enum";
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 @Entity('users')
@@ -15,10 +16,11 @@ export class User {
     @Column({ type: 'varchar', length: 255, unique: true, nullable: false })
     email: string;
 
-    @Column({ type: 'varchar', length: 255, nullable: false })
+    @Column({ type: 'varchar', length: 255, nullable: false, select: false })
+    /* select = false para que no se muestre el apssword */
     password: string;
 
-    @Column({ type: 'varchar', length: 255, default: 'user' })
+    @Column({ type: 'enum' ,default:Role.User , enum: Role})
     role: string;
 
     @Column({default: true})

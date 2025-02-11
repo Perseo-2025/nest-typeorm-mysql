@@ -1,18 +1,13 @@
-import { Body, Controller, Get, Post, Req} from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDTO } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import { Request } from 'express';
-import { Role } from './enum/rol.enum';
+import { Role } from '../common/enum/rol.enum';
 import { Auth } from './decorator/auth.decorator';
+import { ActiveUser } from 'src/common/decorators/active-user.decorator';
+import { IUserActive } from 'src/common/interfaces/user-active.interface';
 
 
-interface RequestProps extends Request {
-  user: {
-    email: string;
-    role: string;
-  }
-}
 
 @Controller('auth')
 export class AuthController {
@@ -42,12 +37,18 @@ export class AuthController {
   } */
 
 
+    /* Ruta de ejemplo */
   @Get( 'profile') 
   @Auth(Role.Admin)
-  async profile(@Req() req : RequestProps){
-    const respuesta = await this.authService.profile(req.user);
+  async profile(@ActiveUser() user: IUserActive){
+    const respuesta = await this.authService.profile(user);
     return respuesta;
   }
+  
+/* async profile(@Req() req : RequestProps){
+    const respuesta = await this.authService.profile(req.user);
+    return respuesta;
+  } */
 
 
 }
