@@ -1,3 +1,7 @@
+import { envs } from "src/config/env";
+
+
+
 export const jwtConstants = {
-    secret : 'palabra_supersecreta_no_usar_en_produccion'
+    secret : envs.secretKey
 }
